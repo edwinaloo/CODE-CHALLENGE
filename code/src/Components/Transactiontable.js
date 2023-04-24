@@ -1,28 +1,37 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-function TransactionsTable(props) {
+function TransactionsTable({ transactions, onAddTransaction }) {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const transaction = { description, amount };
-    props.onAddTransaction(transaction);
-  }
+    const amountNumber = parseFloat(amount);
+    if (isNaN(amountNumber) || description.trim() === '') {
+      return;
+    }
+    const transaction = { description, amount: amountNumber };
+    onAddTransaction(transaction);
+    setDescription('');
+    setAmount('');
+  };
 
   return (
-    <div>
-      <h2>Transactions Table</h2>
+    <section>
+      <header>
+        <h2>Transactions Table</h2>
+      </header>
       <table>
         <thead>
           <tr>
-            <th>type</th>
-            <th>Description</th>            
-            <th>Amount</th>            
+            <th>Type</th>
+            <th>Description</th>
+            <th>Amount</th>
           </tr>
         </thead>
         <tbody>
-          {props.transactions.map(transaction => (
+          {transactions.map((transaction) => (
             <tr key={transaction.id}>
               <td>{transaction.type}</td>
               <td>{transaction.description}</td>
@@ -31,20 +40,42 @@ function TransactionsTable(props) {
           ))}
         </tbody>
       </table>
-      <h2>Add Transaction</h2>
+      <header>
+        <h2>Add Transaction</h2>
+      </header>
       <form onSubmit={handleSubmit}>
         <label>
           Description:
-          <input type="text" value={description} onChange={event => setDescription(event.target.value)} />
+          <input
+            type="text"
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+          />
         </label>
         <label>
           Amount:
-          <input type="text" value={amount} onChange={event => setAmount(event.target.value)} />
+          <input
+            type="text"
+            value={amount}
+            onChange={(event) => setAmount(event.target.value)}
+          />
         </label>
         <button type="submit">Add</button>
       </form>
-    </div>
+    </section>
   );
 }
+
+TransactionsTable.propTypes = {
+  transactions: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  onAddTransaction: PropTypes.func.isRequired,
+};
 
 export default TransactionsTable;
