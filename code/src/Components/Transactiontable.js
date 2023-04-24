@@ -1,5 +1,25 @@
 import React, { useState } from 'react';
 import PropTypes  from 'prop-types';
+const handleAddTransaction = async (transaction) => {
+  try {
+    const response = await fetch('/api/transactions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(transaction),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to add transaction');
+    }
+    const newTransaction = await response.json();
+    const updatedTransactions = [...transactions, newTransaction];
+    setTransactions(updatedTransactions);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 
 function TransactionsTable({ transactions, onAddTransaction }) {
   const [description, setDescription] = useState('');
