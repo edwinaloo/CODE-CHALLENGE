@@ -48,6 +48,7 @@ function App() {
     </div>
   );
 }
+<link rel="stylesheet" href="path/to/styles.css" />
 
 export default App;
 
