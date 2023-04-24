@@ -16,13 +16,15 @@ function TransactionsTable(props) {
       <table>
         <thead>
           <tr>
-            <th>Description</th>
-            <th>Amount</th>
+            <th>type</th>
+            <th>Description</th>            
+            <th>Amount</th>            
           </tr>
         </thead>
         <tbody>
           {props.transactions.map(transaction => (
             <tr key={transaction.id}>
+              <td>{transaction.type}</td>
               <td>{transaction.description}</td>
               <td>{transaction.amount}</td>
             </tr>
