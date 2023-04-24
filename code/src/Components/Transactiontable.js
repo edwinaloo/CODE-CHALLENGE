@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes  from 'prop-types';
 
 function TransactionsTable({ transactions, onAddTransaction }) {
   const [description, setDescription] = useState('');
