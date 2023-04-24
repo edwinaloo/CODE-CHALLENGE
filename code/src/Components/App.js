@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import TransactionsTable from './Transactionlist';
+import TransactionsTable from './Transactiontable';
 
 function App() {
   const [transactions, setTransactions] = useState([]);
