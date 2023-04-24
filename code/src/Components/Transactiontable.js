@@ -16,6 +16,17 @@ function TransactionsTable({ transactions, onAddTransaction }) {
     setDescription('');
     setAmount('');
   };
+const handleAddTransaction = async (transaction) => {
+  const response = await fetch('/api/transactions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(transaction),
+  });
+  const newTransaction = await response.json();
+  setTransactions([...transactions, newTransaction]);
+};
 
   return (
     <section>
